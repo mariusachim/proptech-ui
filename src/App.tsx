@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import './App.css'
+import PropertyForm from './components/PropertyForm'
 
 // Define the Property type
 interface Property {
@@ -88,6 +89,15 @@ const PropertyList = ({ properties }: { properties: Property[] }) => {
 function App() {
   const [properties] = useState<Property[]>(sampleProperties);
 
+  const handlePropertyAdded = useCallback(() => {
+    // In a real application, we would fetch the updated list of properties from the backend
+    // For demo purposes, we'll just show a message
+    console.log('Property added successfully!');
+
+    // Note: In a production app, we would refresh the properties list here
+    // by fetching from the backend API
+  }, []);
+
   return (
     <div className="app-container">
       <header className="app-header">
@@ -96,6 +106,10 @@ function App() {
       </header>
 
       <main>
+        <section className="add-property-section">
+          <PropertyForm onPropertyAdded={handlePropertyAdded} />
+        </section>
+
         <section className="featured-properties">
           <h2>Featured Properties</h2>
           <PropertyList properties={properties} />
