@@ -29,9 +29,11 @@
   font-weight: 500;
   color: var(--primary-color);
   letter-spacing: 0.3px;
+  font-family: 'Arial', 'Helvetica', 'Roboto', sans-serif;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea {
   padding: 0.75rem;
   border: 1px solid var(--medium-gray);
   border-radius: 2px;
@@ -39,7 +41,13 @@
   font-family: 'Georgia', 'Times New Roman', Times, serif;
 }
 
-.form-group input:focus {
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: var(--secondary-color);
   box-shadow: 0 0 0 1px rgba(44, 62, 80, 0.2);
