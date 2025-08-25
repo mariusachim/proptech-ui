@@ -41,9 +41,16 @@ jobs:
       - name: Verify caller
         run: aws sts get-caller-identity
 
-      # 1) Upload hashed/static assets with a long cache
+      # Upload the distribution files
       - name: Sync assets (immutable)
         run: |
           aws s3 sync "$BUILD_DIR" "s3://${S3_BUCKET}" \
             --delete \
             --cache-control "no-cache, no-store, must-revalidate" \
+      
+      - name: Invalidate cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id EHX16SDASR089 \
+            --paths "/index.html"
+           
