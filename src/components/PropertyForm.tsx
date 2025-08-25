@@ -8,6 +8,7 @@ interface PropertyFormProps {
 const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
+  const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -25,12 +26,13 @@ const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:8080/properties', {
+      // TODO remove hard-coding of backend URL
+      const response = await fetch('https://zvbrzxcgfb.us-east-1.awsapprunner.com/properties', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, address }),
+        body: JSON.stringify({ name, address, description }),
       });
 
       if (!response.ok) {
@@ -40,6 +42,7 @@ const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
       // Reset form
       setName('');
       setAddress('');
+      setDescription('');
       setSuccess(true);
 
       // Notify parent component
@@ -80,6 +83,18 @@ const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
             onChange={(e) => setAddress(e.target.value)}
             placeholder="Enter property address"
             disabled={isSubmitting}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description">Description (Optional)</label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter property description"
+            disabled={isSubmitting}
+            rows={4}
           />
         </div>
 
