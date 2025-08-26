@@ -9,6 +9,7 @@ const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
+  const [listingType, setListingType] = useState('Rent');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -32,7 +33,7 @@ const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, address, description }),
+        body: JSON.stringify({ name, address, description, listingType }),
       });
 
       if (!response.ok) {
@@ -43,6 +44,7 @@ const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
       setName('');
       setAddress('');
       setDescription('');
+      setListingType('Rent');
       setSuccess(true);
 
       // Notify parent component
@@ -84,6 +86,19 @@ const PropertyForm = ({ onPropertyAdded }: PropertyFormProps) => {
             placeholder="Enter property address"
             disabled={isSubmitting}
           />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="listingType">Listing Type</label>
+          <select
+            id="listingType"
+            value={listingType}
+            onChange={(e) => setListingType(e.target.value)}
+            disabled={isSubmitting}
+          >
+            <option value="Rent">Rent</option>
+            <option value="Sale">Sale</option>
+          </select>
         </div>
 
         <div className="form-group">
